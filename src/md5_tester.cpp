@@ -27,24 +27,35 @@ struct Result
 
 void write_output(std::list<Result>& results)
 {
-    std::ofstream outfile("config/output.csv");
+    std::ofstream outfile("output.csv");
 
-    outfile << "matches,string 1,string 2,md5-hash 1,md5-hash 2\n";
-
-    for (Result result : results)
+    if (outfile.is_open())
     {
-        outfile << result.match_length << ","
-                << result.str1 << ","
-                << result.str2 << ","
-                << result.hash1 << ","
-                << result.hash2 << "\n";
+        outfile << "matches,string 1,string 2,md5-hash 1,md5-hash 2\n";
+
+        for (Result result : results)
+        {
+            outfile << result.match_length << ","
+                    << result.str1 << ","
+                    << result.str2 << ","
+                    << result.hash1 << ","
+                    << result.hash2 << "\n";
+        }
+
+        std::cout << "\n'output.csv' was writen.\n";
+    }
+    else
+    {
+        std::cout << "\nCould not write 'out/outfile.csv'.";
     }
     outfile.close();
+
+    
 }
 
 void read_config()
 {
-    std::ifstream config("md5_tester.config");
+    std::ifstream config("config/md5_tester.config");
     std::array<std::string, 5> conf_lines;
 
     if (config.is_open())
